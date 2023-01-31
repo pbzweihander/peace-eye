@@ -1,0 +1,21 @@
+[package]
+name = "peace-eye"
+version = "0.1.0"
+description = "Desktop GCI/AWACS simulator for Tacview and DCS World"
+authors = ["Kangwook Lee <pbzweihander@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/pbzweihander/peace-eye"
+edition = "2021"
+rust-version = "1.57"
+
+[build-dependencies]
+tauri-build = { version = "1.2", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.2", features = ["api-all"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
