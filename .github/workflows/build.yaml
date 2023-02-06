@@ -39,6 +39,12 @@ jobs:
           src-tauri/target
     - name: Install frontend dependencies
       run: yarn
-    - uses: tauri-apps/tauri-action@v0
+    - uses: tauri-apps/tauri-action@2846fa8fccaf00cb3d9b3433d18dd7bde8006a22
+      id: tauri-build
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.platform }}
+        path: "${{ join(fromJSON(steps.tauri-build.outputs.artifactPaths), '\n') }}"
+        if-no-files-found: error
