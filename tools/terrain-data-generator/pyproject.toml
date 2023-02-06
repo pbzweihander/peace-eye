@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "terrain-data-generator"
+version = "0.1.0"
+description = "Terrain data generator for peace-eye"
+authors = ["Kangwook Lee <pbzweihander@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "terrain_data_generator"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+pydcs = { git = "https://github.com/pydcs/dcs.git", rev = "e7ed9061187f7c2cb6719ae757bf91e9cfb85441" }  # https://github.com/pydcs/dcs/issues/283
+pyproj = "^3.4.1"
+
+[tool.poetry.scripts]
+generate = "terrain_data_generator:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
