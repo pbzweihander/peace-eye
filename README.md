@@ -5,9 +5,10 @@ Inspired by [b1naryth1ef/sneaker](https://github.com/b1naryth1ef/sneaker).
 The name `peace-eye` is derived from [Korean version of Boeing 737 AEW&C "Peace Eye"](https://en.wikipedia.org/wiki/Boeing_737_AEW%26C).
 Powered by [tauri](https://tauri.app/).
 
-## Requirements
+## Prerequisites
 
 - Server should support Tacview realtime telemetry
+- [Tauri Prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites)
 - [Rust](https://www.rust-lang.org/)
 - [Node](https://nodejs.org/en/)
 
