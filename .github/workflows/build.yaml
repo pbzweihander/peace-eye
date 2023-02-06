@@ -26,6 +26,17 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+    - uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          node-modules-${{ runner.os }}-
+    - uses: Swatinem/rust-cache@v2
+      with:
+        cache-targets: "false"
+        cache-directories: |
+          src-tauri/target
     - name: Build frontend
       run: yarn && yarn build
     - uses: tauri-apps/tauri-action@v0
