@@ -37,8 +37,8 @@ jobs:
         cache-targets: "false"
         cache-directories: |
           src-tauri/target
-    - name: Build frontend
-      run: yarn && yarn build
+    - name: Install frontend dependencies
+      run: yarn
     - uses: tauri-apps/tauri-action@v0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
