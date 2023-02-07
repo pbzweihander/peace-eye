@@ -118,4 +118,5 @@ export const AircraftToSidcIcon: Record<string, string> = {
   SA342L: "1102000100",
   SA342Mistral: "1102000100",
   SA342Minigun: "1102000100",
+  "AH-64D_BLK_II": "1102000100",
 };
