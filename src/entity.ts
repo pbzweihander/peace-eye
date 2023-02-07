@@ -21,7 +21,11 @@ export function filterObject(
   if (types.length === 0) {
     return false;
   }
-  if (!settings.view.showGround && types.includes("Ground")) {
+  if (
+    !settings.view.showGround &&
+    types.includes("Ground") &&
+    object.name !== "FARP"
+  ) {
     return false;
   }
   if (types.includes("Parachutist")) {
