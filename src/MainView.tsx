@@ -23,6 +23,11 @@ import Spinner from "./Spinner";
 import { getTerrainFromReferencePoint } from "./dcs/terrain";
 import { colorMode, filterObject } from "./entity";
 import {
+  defaultObjectSettings,
+  type ObjectSettings,
+  type ObjectSettingsInventory,
+} from "./objectSettings";
+import {
   type TacviewState,
   newTacviewState,
   type TacviewObject,
@@ -34,14 +39,6 @@ import {
   moveCoords,
   nmToMeter,
 } from "./util";
-
-interface ObjectSettings {
-  warningRange: number;
-  threatRange: number;
-  watch: boolean;
-}
-
-type ObjectSettingsInventory = Record<number, ObjectSettings>;
 
 export default function MainView(): ReactElement {
   const navigate = useNavigate();
@@ -335,57 +332,13 @@ export default function MainView(): ReactElement {
                 onClose={() => {
                   setSelectedObjectId(undefined);
                 }}
-                warningRange={
-                  objectSettingsInventory[selectedObjectId]?.warningRange ?? 0
+                objectSettings={
+                  objectSettingsInventory[selectedObjectId] ??
+                  defaultObjectSettings()
                 }
-                onWarningRangeChanged={(wr) => {
+                setObjectSettings={(objectSettings) => {
                   setObjectSettingsInventory((objectSettingsInventory) => {
-                    if (
-                      objectSettingsInventory[selectedObjectId] === undefined
-                    ) {
-                      objectSettingsInventory[selectedObjectId] = {
-                        warningRange: 0,
-                        threatRange: 0,
-                        watch: false,
-                      };
-                    }
-                    objectSettingsInventory[selectedObjectId].warningRange = wr;
-                    return { ...objectSettingsInventory };
-                  });
-                }}
-                threatRange={
-                  objectSettingsInventory[selectedObjectId]?.threatRange ?? 0
-                }
-                onThreatRangeChanged={(wr) => {
-                  setObjectSettingsInventory((objectSettingsInventory) => {
-                    if (
-                      objectSettingsInventory[selectedObjectId] === undefined
-                    ) {
-                      objectSettingsInventory[selectedObjectId] = {
-                        warningRange: 0,
-                        threatRange: 0,
-                        watch: false,
-                      };
-                    }
-                    objectSettingsInventory[selectedObjectId].threatRange = wr;
-                    return { ...objectSettingsInventory };
-                  });
-                }}
-                isWatching={
-                  objectSettingsInventory[selectedObjectId]?.watch ?? false
-                }
-                onWatchChanged={(watch) => {
-                  setObjectSettingsInventory((objectSettingsInventory) => {
-                    if (
-                      objectSettingsInventory[selectedObjectId] === undefined
-                    ) {
-                      objectSettingsInventory[selectedObjectId] = {
-                        warningRange: 0,
-                        threatRange: 0,
-                        watch: false,
-                      };
-                    }
-                    objectSettingsInventory[selectedObjectId].watch = watch;
+                    objectSettingsInventory[selectedObjectId] = objectSettings;
                     return { ...objectSettingsInventory };
                   });
                 }}

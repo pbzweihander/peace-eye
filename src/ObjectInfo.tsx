@@ -2,6 +2,7 @@ import * as mgrs from "mgrs";
 import { useCallback, type ReactElement } from "react";
 import { useMap } from "react-map-gl";
 
+import { type ObjectSettings } from "./objectSettings";
 import { type TacviewObject } from "./tacview";
 import { tagToString } from "./tacview/record/objectProperty";
 import { formatDDM, formatDMS, getCardinal, meterToFeet } from "./util";
@@ -11,12 +12,8 @@ export interface ObjectInfoProps {
   referenceLatitude: number;
   referenceLongitude: number;
   onClose: () => void;
-  warningRange: number;
-  onWarningRangeChanged: (wr: number) => void;
-  threatRange: number;
-  onThreatRangeChanged: (wr: number) => void;
-  isWatching: boolean;
-  onWatchChanged: (watch: boolean) => void;
+  objectSettings: ObjectSettings;
+  setObjectSettings: (objectSettings: ObjectSettings) => void;
 }
 
 export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
@@ -35,12 +32,8 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
     referenceLatitude,
     referenceLongitude,
     onClose,
-    warningRange,
-    onWarningRangeChanged,
-    threatRange,
-    onThreatRangeChanged,
-    isWatching,
-    onWatchChanged,
+    objectSettings,
+    setObjectSettings,
   } = props;
 
   const coords: [number, number] | undefined =
@@ -123,9 +116,10 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
               className="input input-xs input-bordered w-full"
               type="number"
               min="0"
-              value={warningRange}
+              value={objectSettings.warningRange}
               onChange={(e) => {
-                onWarningRangeChanged(parseRange(e.target.value));
+                objectSettings.warningRange = parseRange(e.target.value);
+                setObjectSettings(objectSettings);
               }}
             />
           </label>
@@ -135,9 +129,10 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
               className="input input-xs input-bordered w-full"
               type="number"
               min="0"
-              value={threatRange}
+              value={objectSettings.threatRange}
               onChange={(e) => {
-                onThreatRangeChanged(parseRange(e.target.value));
+                objectSettings.threatRange = parseRange(e.target.value);
+                setObjectSettings(objectSettings);
               }}
             />
           </label>
@@ -146,9 +141,10 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
             <input
               className="checkbox"
               type="checkbox"
-              checked={isWatching}
+              checked={objectSettings.watch}
               onChange={(e) => {
-                onWatchChanged(e.target.checked);
+                objectSettings.watch = e.target.checked;
+                setObjectSettings(objectSettings);
               }}
             />
           </label>
