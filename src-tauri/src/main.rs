@@ -138,6 +138,17 @@ struct TacviewState {
 }
 
 impl TacviewState {
+    fn new(header: Header) -> Self {
+        Self {
+            header,
+            global_properties: Default::default(),
+            objects: HashMap::new(),
+            current_timeframe: None,
+            blue_bullseye: None,
+            red_bullseye: None,
+        }
+    }
+
     fn update(&mut self, record: Record) {
         match record {
             Record::Remove(id) => {
@@ -275,14 +286,8 @@ async fn tacview_reader_task(
             match reader.next().await {
                 Ok(record) => {
                     let mut state = TACVIEW_STATE.lock().await;
-                    let state = state.get_or_insert_with(|| TacviewState {
-                        header: reader.header.clone(),
-                        global_properties: Default::default(),
-                        objects: HashMap::new(),
-                        current_timeframe: None,
-                        blue_bullseye: None,
-                        red_bullseye: None,
-                    });
+                    let state =
+                        state.get_or_insert_with(|| TacviewState::new(reader.header.clone()));
                     state.update(record);
                 }
                 Err(error) => {
@@ -351,6 +356,9 @@ async fn disconnect() {
     if let Some(task_handle) = &*emit_task_handle {
         task_handle.abort();
     }
+    tokio::task::yield_now().await;
+    let mut state = TACVIEW_STATE.lock().await;
+    *state = None;
 }
 
 fn main() {
