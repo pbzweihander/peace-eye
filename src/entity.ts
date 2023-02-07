@@ -1,6 +1,7 @@
 import * as ms from "milsymbol";
 
 import { AircraftToSidcIcon } from "./dcs/aircraft";
+import { type Settings } from "./settings";
 import { type TacviewObject } from "./tacview";
 
 export const colorMode: ms.ColorMode = ms.ColorMode(
@@ -12,20 +13,30 @@ export const colorMode: ms.ColorMode = ms.ColorMode(
 );
 const symbolCache: Record<string, ms.Symbol> = {};
 
-export function filterObject(object: TacviewObject): boolean {
-  if (object.type?.includes("Parachutist") ?? false) {
+export function filterObject(
+  object: TacviewObject,
+  settings: Settings
+): boolean {
+  const types = object.type ?? [];
+  if (types.length === 0) {
     return false;
   }
-  if (object.type?.includes("Misc") ?? false) {
+  if (!settings.view.showGround && types.includes("Ground")) {
     return false;
   }
-  if (object.type?.includes("Projectile") ?? false) {
+  if (types.includes("Parachutist")) {
     return false;
   }
-  if (object.type?.includes("Weapon") ?? false) {
+  if (types.includes("Misc")) {
     return false;
   }
-  if ((object.type?.includes("Air") ?? false) && object.estimatedSpeed < 25) {
+  if (types.includes("Projectile")) {
+    return false;
+  }
+  if (types.includes("Weapon")) {
+    return false;
+  }
+  if (types.includes("Air") && object.estimatedSpeed < 25) {
     return false;
   }
   return true;

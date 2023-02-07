@@ -1,12 +1,18 @@
 import classNames from "classnames";
 import { useState, type ReactElement } from "react";
 
+import { type Settings } from "./settings";
+
 export interface SettingsModalProps {
+  settings: Settings;
+  setSettings: (settings: Settings) => void;
   onDisconnect: (() => void) | (() => Promise<void>);
 }
 
 export default function SettingsModal(props: SettingsModalProps): ReactElement {
-  const [selectedTab, setSelectedTab] = useState("connection");
+  const [selectedTab, setSelectedTab] = useState("view");
+
+  const { settings, setSettings, onDisconnect } = props;
 
   return (
     <>
@@ -32,6 +38,17 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
             <a
               className={classNames(
                 "tab tab-bordered",
+                selectedTab === "view" && "tab-active"
+              )}
+              onClick={() => {
+                setSelectedTab("view");
+              }}
+            >
+              View
+            </a>
+            <a
+              className={classNames(
+                "tab tab-bordered",
                 selectedTab === "connection" && "tab-active"
               )}
               onClick={() => {
@@ -52,13 +69,31 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
               About
             </a>
           </div>
-          <div className="p-2">
+          <div className="px-2 pb-2 pt-4">
+            {selectedTab === "view" && (
+              <div>
+                <label className="input-group">
+                  <span className="cursor-pointer bg-gray-300">
+                    Show Ground
+                  </span>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    checked={settings.view.showGround}
+                    onChange={(e) => {
+                      settings.view.showGround = e.target.checked;
+                      setSettings(settings);
+                    }}
+                  />
+                </label>
+              </div>
+            )}
             {selectedTab === "connection" && (
               <div>
                 <button
                   className="btn btn-error"
                   onClick={async () => {
-                    await props.onDisconnect();
+                    await onDisconnect();
                   }}
                 >
                   Disconnect

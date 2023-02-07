@@ -27,6 +27,7 @@ import {
   type ObjectSettings,
   type ObjectSettingsInventory,
 } from "./objectSettings";
+import { defaultSettings } from "./settings";
 import {
   type TacviewState,
   newTacviewState,
@@ -43,6 +44,7 @@ import {
 export default function MainView(): ReactElement {
   const navigate = useNavigate();
   const [state, setState] = useState(newTacviewState());
+  const [settings, setSettings] = useState(defaultSettings());
   const [objectSettingsInventory, setObjectSettingsInventory] =
     useState<ObjectSettingsInventory>({});
   const [cursorCoords, setCursorCoords] = useState<[number, number]>([0, 0]);
@@ -141,9 +143,9 @@ export default function MainView(): ReactElement {
     return {
       type: "FeatureCollection",
       features: Object.values(state.objects)
-        .filter(filterObject)
         .filter(
           (object) =>
+            object.type?.includes("Air") === true &&
             object.coords?.latitude !== undefined &&
             object.coords?.longitude !== undefined &&
             object.coords?.heading !== undefined
@@ -419,7 +421,7 @@ export default function MainView(): ReactElement {
           <AirportMarker key={airport.name} airport={airport} />
         ))}
         {Object.entries(state.objects)
-          .filter(([_id, object]) => filterObject(object))
+          .filter(([_id, object]) => filterObject(object, settings))
           .map(([id, object]) => {
             return (
               <ObjectMarker
@@ -435,7 +437,13 @@ export default function MainView(): ReactElement {
             );
           })}
       </Map>
-      <SettingsModal onDisconnect={onDisconnect} />
+      <SettingsModal
+        settings={settings}
+        setSettings={(settings) => {
+          setSettings({ ...settings });
+        }}
+        onDisconnect={onDisconnect}
+      />
     </>
   );
 }
