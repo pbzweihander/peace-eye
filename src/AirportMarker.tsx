@@ -7,12 +7,15 @@ import { sidcToSymbol } from "./entity";
 
 export interface AirportMarkerProps {
   airport: Airport;
+  selected: boolean;
+  onClick: () => void;
 }
 
 export default function AirportMarker(props: AirportMarkerProps): ReactElement {
-  const { airport } = props;
+  const { airport, selected, onClick } = props;
 
   const symbol = sidcToSymbol("10012000001213010000");
+  const symbolElement = <Symbol symbol={symbol} />;
 
   return (
     <>
@@ -20,13 +23,25 @@ export default function AirportMarker(props: AirportMarkerProps): ReactElement {
         latitude={airport.position[0]}
         longitude={airport.position[1]}
         anchor="center"
+        onClick={() => {
+          onClick();
+        }}
       >
-        <Symbol symbol={symbol} />
+        {selected ? (
+          <div className="p-2 rounded-full border-2 border-white">
+            {symbolElement}
+          </div>
+        ) : (
+          symbolElement
+        )}
       </Marker>
       <Marker
         latitude={airport.position[0]}
         longitude={airport.position[1]}
         anchor="bottom"
+        onClick={() => {
+          onClick();
+        }}
       >
         <div className="text-white mb-3">{airport.name}</div>
       </Marker>

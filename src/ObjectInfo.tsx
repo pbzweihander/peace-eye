@@ -12,8 +12,8 @@ export interface ObjectInfoProps {
   referenceLatitude: number;
   referenceLongitude: number;
   onClose: () => void;
-  objectSettings: ObjectSettings;
-  setObjectSettings: (objectSettings: ObjectSettings) => void;
+  objectSettings?: ObjectSettings;
+  setObjectSettings?: (objectSettings: ObjectSettings) => void;
 }
 
 export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
@@ -44,6 +44,7 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
           referenceLongitude + object.coords.longitude,
         ]
       : undefined;
+  const objectTypes = object.type ?? [];
 
   return (
     <div className="flex flex-col bg-gray-200 border border-gray-500 rounded-sm text-base">
@@ -83,72 +84,84 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
               </div>
             </>
           )}
-          <div>
-            Type:{" "}
-            {object.type?.map((ty) => {
-              const tagStr = tagToString(ty);
-              return (
-                <span key={tagStr} className="mr-1 text-sm">
-                  {tagStr}
-                </span>
-              );
-            })}
-          </div>
+          {objectTypes.length > 0 && (
+            <div>
+              Type:{" "}
+              {objectTypes.map((ty) => {
+                const tagStr = tagToString(ty);
+                return (
+                  <span key={tagStr} className="mr-1 text-sm">
+                    {tagStr}
+                  </span>
+                );
+              })}
+            </div>
+          )}
         </div>
-        <div className="divider divider-horizontal" />
-        <div className="flex-grow pr-4">
-          <button
-            className="btn btn-block btn-sm btn-accent mb-2"
-            onClick={() => {
-              if (coords !== undefined) {
-                map.current?.flyTo({
-                  center: [coords[1], coords[0]],
-                  duration: 1000,
-                });
-              }
-            }}
-          >
-            Center
-          </button>
-          <label className="input-group input-group-xs w-full mb-2">
-            <span className="w-12 bg-warning">WR</span>
-            <input
-              className="input input-xs input-bordered w-full"
-              type="number"
-              min="0"
-              value={objectSettings.warningRange}
-              onChange={(e) => {
-                objectSettings.warningRange = parseRange(e.target.value);
-                setObjectSettings(objectSettings);
-              }}
-            />
-          </label>
-          <label className="input-group input-group-xs w-full mb-2">
-            <span className="w-12 bg-error">TR</span>
-            <input
-              className="input input-xs input-bordered w-full"
-              type="number"
-              min="0"
-              value={objectSettings.threatRange}
-              onChange={(e) => {
-                objectSettings.threatRange = parseRange(e.target.value);
-                setObjectSettings(objectSettings);
-              }}
-            />
-          </label>
-          <label className="input-group input-group-xs w-fit">
-            <span className="bg-secondary cursor-pointer">Watch</span>
-            <input
-              className="checkbox"
-              type="checkbox"
-              checked={objectSettings.watch}
-              onChange={(e) => {
-                objectSettings.watch = e.target.checked;
-                setObjectSettings(objectSettings);
-              }}
-            />
-          </label>
-        </div>
+        {objectSettings !== undefined && (
+          <>
+            <div className="divider divider-horizontal" />
+            <div className="flex-grow pr-4">
+              <button
+                className="btn btn-block btn-sm btn-accent mb-2"
+                onClick={() => {
+                  if (coords !== undefined) {
+                    map.current?.flyTo({
+                      center: [coords[1], coords[0]],
+                      duration: 1000,
+                    });
+                  }
+                }}
+              >
+                Center
+              </button>
+              <label className="input-group input-group-xs w-full mb-2">
+                <span className="w-12 bg-warning">WR</span>
+                <input
+                  className="input input-xs input-bordered w-full"
+                  type="number"
+                  min="0"
+                  value={objectSettings.warningRange}
+                  onChange={(e) => {
+                    if (setObjectSettings !== undefined) {
+                      objectSettings.warningRange = parseRange(e.target.value);
+                      setObjectSettings(objectSettings);
+                    }
+                  }}
+                />
+              </label>
+              <label className="input-group input-group-xs w-full mb-2">
+                <span className="w-12 bg-error">TR</span>
+                <input
+                  className="input input-xs input-bordered w-full"
+                  type="number"
+                  min="0"
+                  value={objectSettings.threatRange}
+                  onChange={(e) => {
+                    if (setObjectSettings !== undefined) {
+                      objectSettings.threatRange = parseRange(e.target.value);
+                      setObjectSettings(objectSettings);
+                    }
+                  }}
+                />
+              </label>
+              <label className="input-group input-group-xs w-fit">
+                <span className="bg-secondary cursor-pointer">Watch</span>
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  checked={objectSettings.watch}
+                  onChange={(e) => {
+                    if (setObjectSettings !== undefined) {
+                      objectSettings.watch = e.target.checked;
+                      setObjectSettings(objectSettings);
+                    }
+                  }}
+                />
+              </label>
+            </div>
+          </>
+        )}
       </div>
       {coords !== undefined && (
         <div className="p-2 flex flex-col">

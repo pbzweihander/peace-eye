@@ -51,6 +51,9 @@ export default function MainView(): ReactElement {
   const [selectedObjectId, setSelectedObjectId] = useState<number | undefined>(
     undefined
   );
+  const [selectedAirportIndex, setSelectedAirportIndex] = useState<
+    number | undefined
+  >(undefined);
   const [rulerStartCoords, setRulerStartCoords] = useState<
     [number, number] | undefined
   >(undefined);
@@ -296,6 +299,25 @@ export default function MainView(): ReactElement {
     zoom: 6,
   };
 
+  // Entity = Object + Airport
+  let selectedEntity: TacviewObject | undefined;
+  let isObjectSelected = false;
+  if (selectedObjectId !== undefined) {
+    selectedEntity = state.objects[selectedObjectId];
+    isObjectSelected = true;
+  } else if (selectedAirportIndex !== undefined) {
+    const airport = terrain.airports[selectedAirportIndex];
+    selectedEntity = {
+      estimatedSpeed: 0,
+      estimatedAltitudeRate: 0,
+      coords: {
+        latitude: airport.position[0],
+        longitude: airport.position[1],
+      },
+      name: airport.name,
+    };
+  }
+
   return (
     <>
       <Map
@@ -325,27 +347,34 @@ export default function MainView(): ReactElement {
       >
         <AttributionControl position="bottom-left" />
         <div className="m-2 absolute left-0 top-0">
-          {selectedObjectId !== undefined &&
-            state.objects[selectedObjectId] !== undefined && (
-              <ObjectInfo
-                object={state.objects[selectedObjectId]}
-                referenceLatitude={referenceLatitude}
-                referenceLongitude={referenceLongitude}
-                onClose={() => {
-                  setSelectedObjectId(undefined);
-                }}
-                objectSettings={
-                  objectSettingsInventory[selectedObjectId] ??
-                  defaultObjectSettings()
-                }
-                setObjectSettings={(objectSettings) => {
-                  setObjectSettingsInventory((objectSettingsInventory) => {
-                    objectSettingsInventory[selectedObjectId] = objectSettings;
-                    return { ...objectSettingsInventory };
-                  });
-                }}
-              />
-            )}
+          {selectedEntity !== undefined && (
+            <ObjectInfo
+              object={selectedEntity}
+              referenceLatitude={referenceLatitude}
+              referenceLongitude={referenceLongitude}
+              onClose={() => {
+                setSelectedObjectId(undefined);
+                setSelectedAirportIndex(undefined);
+              }}
+              objectSettings={
+                isObjectSelected
+                  ? objectSettingsInventory[selectedObjectId!] ??
+                    defaultObjectSettings()
+                  : undefined
+              }
+              setObjectSettings={
+                isObjectSelected
+                  ? (objectSettings) => {
+                      setObjectSettingsInventory((objectSettingsInventory) => {
+                        objectSettingsInventory[selectedObjectId!] =
+                          objectSettings;
+                        return { ...objectSettingsInventory };
+                      });
+                    }
+                  : undefined
+              }
+            />
+          )}
         </div>
         <div className="m-2 absolute right-0 top-0">
           <ControlPanel
@@ -417,8 +446,16 @@ export default function MainView(): ReactElement {
         {rulerStartCoords !== undefined && (
           <BraaInfo start={rulerStartCoords} end={cursorCoords} />
         )}
-        {terrain.airports.map((airport) => (
-          <AirportMarker key={airport.name} airport={airport} />
+        {terrain.airports.map((airport, idx) => (
+          <AirportMarker
+            key={airport.name}
+            airport={airport}
+            selected={selectedAirportIndex === idx}
+            onClick={() => {
+              setSelectedObjectId(undefined);
+              setSelectedAirportIndex(idx);
+            }}
+          />
         ))}
         {Object.entries(state.objects)
           .filter(([_id, object]) => filterObject(object, settings))
@@ -432,6 +469,7 @@ export default function MainView(): ReactElement {
                 selected={selectedObjectId === Number(id)}
                 onClick={() => {
                   setSelectedObjectId(Number(id));
+                  setSelectedAirportIndex(undefined);
                 }}
               />
             );
