@@ -156,7 +156,8 @@ export default function MainView(): ReactElement {
             referenceLatitude + object.coords!.latitude!,
             referenceLongitude + object.coords!.longitude!,
             object.coords!.heading!,
-            object.estimatedSpeed * 0.514444 * 30
+            // knot -> meter per second -> 1 minute
+            object.estimatedSpeed * 0.514444 * 60
           );
           return {
             type: "Feature",
