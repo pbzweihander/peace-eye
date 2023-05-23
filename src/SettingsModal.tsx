@@ -74,7 +74,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
               <div>
                 <label className="input-group">
                   <span className="cursor-pointer bg-gray-300">
-                    Show Ground
+                    Show ground objects
                   </span>
                   <input
                     className="checkbox"
