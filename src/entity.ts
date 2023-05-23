@@ -81,6 +81,7 @@ export function objectToSymbol(object: TacviewObject): ms.Symbol {
   return sidcToSymbol(sidc);
 }
 
+// Reference: https://sidc.milsymb.net/
 function getSidc(object: TacviewObject): string {
   let ident = "4";
   if (object.coalition === "Allies") {
