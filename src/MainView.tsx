@@ -148,10 +148,12 @@ export default function MainView(): ReactElement {
       features: Object.values(state.objects)
         .filter(
           (object) =>
+            filterObject(object, settings) &&
             object.type?.includes("Air") === true &&
             object.coords?.latitude !== undefined &&
             object.coords?.longitude !== undefined &&
-            object.coords?.heading !== undefined
+            object.coords?.heading !== undefined &&
+            object.estimatedSpeed >= 25
         )
         .map((object) => {
           const endCoords = moveCoords(
