@@ -33,9 +33,7 @@ jobs:
           node-modules-${{ runner.os }}-
     - uses: Swatinem/rust-cache@v2
       with:
-        cache-targets: "false"
-        cache-directories: |
-          src-tauri/target
+        workspaces: src-tauri
     - name: Install frontend dependencies
       run: yarn
     - uses: tauri-apps/tauri-action@v0
