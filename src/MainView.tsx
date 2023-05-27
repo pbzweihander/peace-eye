@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import AirportMarker from "./AirportMarker";
 import BraaInfo from "./BraaInfo";
 import ControlPanel from "./ControlPanel";
+import CursorInfo from "./CursorInfo";
 import ObjectInfo from "./ObjectInfo";
 import ObjectMarker from "./ObjectMarker";
 import SettingsModal from "./SettingsModal";
@@ -34,13 +35,7 @@ import {
   newTacviewState,
   type TacviewObject,
 } from "./tacview";
-import {
-  getBearing,
-  getCardinal,
-  getRange,
-  moveCoords,
-  nmToMeter,
-} from "./util";
+import { moveCoords, nmToMeter } from "./util";
 
 export default function MainView(): ReactElement {
   const navigate = useNavigate();
@@ -110,27 +105,6 @@ export default function MainView(): ReactElement {
           referenceLongitude + ownedBullseye.coords.longitude,
         ]
       : undefined;
-  // Calculate bullseye info of cursor
-  const cursorBulls = useMemo<[number, number] | undefined>(() => {
-    if (bullseyeCoords === undefined || terrain === undefined) {
-      return undefined;
-    }
-
-    let bearing = getBearing(bullseyeCoords, cursorCoords, terrain);
-    if (settings.view.useMagneticHeading) {
-      bearing =
-        bearing - (geomagnetismModel.point(bullseyeCoords).decl as number);
-    }
-    bearing = Math.round((bearing + 360) % 360);
-    const range = Math.round(getRange(bullseyeCoords, cursorCoords));
-
-    return [bearing, range];
-  }, [
-    cursorCoords,
-    state.blueBullseye,
-    state.redBullseye,
-    settings.view.useMagneticHeading,
-  ]);
 
   // Populate GeoJson data for ruler
   const rulerGeoJson: FeatureCollection = useMemo(() => {
@@ -413,13 +387,14 @@ export default function MainView(): ReactElement {
             }}
           />
         </div>
-        {cursorBulls !== undefined && (
-          <div className="absolute right-0 bottom-0 max-w-xl max-h-32 text-yellow-600 text-3xl bg-gray-400 bg-opacity-20 p-1">
-            {`${cursorBulls[0].toString().padStart(3, "0")}${getCardinal(
-              cursorBulls[0]
-            )} / ${cursorBulls[1]}`}
-          </div>
-        )}
+        <CursorInfo
+          cursorCoords={cursorCoords}
+          bullseyeCoords={bullseyeCoords}
+          terrain={terrain}
+          geomagnetismModel={geomagnetismModel}
+          useMagneticHeading={settings.view.useMagneticHeading}
+          showCursorCoords={settings.view.showCursorCoords}
+        />
         <Source id="ruler" type="geojson" data={rulerGeoJson}>
           <Layer
             id="ruler"

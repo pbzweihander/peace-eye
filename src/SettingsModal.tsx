@@ -104,7 +104,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
                     </span>
                   </label>
                 </div>
-                <div>
+                <div className="mb-2">
                   <label className="input-group">
                     <input
                       className="checkbox"
@@ -117,6 +117,22 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
                     />
                     <span className="cursor-pointer bg-gray-300">
                       Show air objects slower than 25 knots
+                    </span>
+                  </label>
+                </div>
+                <div>
+                  <label className="input-group">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      checked={settings.view.showCursorCoords}
+                      onChange={(e) => {
+                        settings.view.showCursorCoords = e.target.checked;
+                        setSettings(settings);
+                      }}
+                    />
+                    <span className="cursor-pointer bg-gray-300">
+                      Show cursor coordinates
                     </span>
                   </label>
                 </div>
