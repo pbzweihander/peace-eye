@@ -59,7 +59,13 @@ export default function MainView(): ReactElement {
     [number, number] | undefined
   >(undefined);
 
-  const geomagnetismModel = useMemo(() => geomagnetism.model(), []);
+  const geomagnetismModel = useMemo(() => {
+    if (state.globalProperties.referenceTime != null) {
+      return geomagnetism.model(new Date(state.globalProperties.referenceTime));
+    } else {
+      return geomagnetism.model();
+    }
+  }, [state.globalProperties.referenceTime]);
 
   const onDisconnect = useCallback(async () => {
     setState(newTacviewState());
