@@ -124,5 +124,11 @@
         -116.7807920733868
       ]
     }
-  ]
+  ],
+  "projection": {
+    "centralMeridian": -117,
+    "falseEasting": -193996.80999964548,
+    "falseNorthing": -4410028.063999966,
+    "scaleFactor": 0.9996
+  }
 }

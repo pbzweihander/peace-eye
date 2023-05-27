@@ -11,11 +11,19 @@ export interface Terrain {
   name: string;
   center: [number, number];
   airports: Airport[];
+  projection: Projection;
 }
 
 export interface Airport {
   name: string;
   position: [number, number];
+}
+
+export interface Projection {
+  centralMeridian: number;
+  falseEasting: number;
+  falseNorthing: number;
+  scaleFactor: number;
 }
 
 export const Terrains = [
