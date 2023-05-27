@@ -14,6 +14,8 @@ export interface ObjectInfoProps {
   onClose: () => void;
   objectSettings?: ObjectSettings;
   setObjectSettings?: (objectSettings: ObjectSettings) => void;
+  geomagnetismModel: any;
+  useMagneticHeading: boolean;
 }
 
 export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
@@ -34,6 +36,8 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
     onClose,
     objectSettings,
     setObjectSettings,
+    geomagnetismModel,
+    useMagneticHeading,
   } = props;
 
   const coords: [number, number] | undefined =
@@ -45,6 +49,14 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
         ]
       : undefined;
   const objectTypes = object.type ?? [];
+
+  let heading = object.coords?.heading;
+  if (useMagneticHeading && heading != null && coords != null) {
+    heading = heading + (geomagnetismModel.point(coords).decl as number);
+  }
+  if (heading != null) {
+    heading = Math.round((heading + 360) % 360);
+  }
 
   return (
     <div className="flex flex-col bg-gray-200 border border-gray-500 rounded-sm text-base">
@@ -67,10 +79,10 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
             <>
               <div>
                 Heading:{" "}
-                {object.coords?.heading !== undefined &&
-                  `${Math.round(object.coords.heading)
+                {heading != null &&
+                  `${Math.round(heading)
                     .toString()
-                    .padStart(3, "0")}${getCardinal(object.coords.heading)}`}
+                    .padStart(3, "0")}${getCardinal(heading)}`}
               </div>
               <div>
                 Altitude:{" "}

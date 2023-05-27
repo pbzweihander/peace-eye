@@ -6,11 +6,18 @@ import { getBearing, getCardinal, getRange } from "./util";
 export interface BraaInfoProps {
   start: [number, number];
   end: [number, number];
+  geomagnetismModel: any;
+  useMagneticHeading: boolean;
 }
 
 export default function BraaInfo(props: BraaInfoProps): ReactElement {
   const range = Math.round(getRange(props.start, props.end));
-  const bearing = Math.round(getBearing(props.start, props.end));
+  let bearing = getBearing(props.start, props.end);
+  if (props.useMagneticHeading) {
+    bearing =
+      bearing + (props.geomagnetismModel.point(props.end).decl as number);
+  }
+  bearing = Math.round((bearing + 360) % 360);
   const cardinal = getCardinal(bearing);
 
   return (

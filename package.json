@@ -19,6 +19,7 @@
     "classnames": "^2.3.2",
     "daisyui": "^2.50.0",
     "geojson": "^0.5.0",
+    "geomagnetism": "^0.1.1",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
     "maplibre-gl": "^2.4.0",
     "mgrs": "^1.0.1-alpha.0",

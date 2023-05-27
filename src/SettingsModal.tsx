@@ -77,6 +77,22 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
                     <input
                       className="checkbox"
                       type="checkbox"
+                      checked={settings.view.useMagneticHeading}
+                      onChange={(e) => {
+                        settings.view.useMagneticHeading = e.target.checked;
+                        setSettings(settings);
+                      }}
+                    />
+                    <span className="cursor-pointer bg-gray-300">
+                      Use magnetic heading
+                    </span>
+                  </label>
+                </div>
+                <div className="mb-2">
+                  <label className="input-group">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
                       checked={settings.view.showGround}
                       onChange={(e) => {
                         settings.view.showGround = e.target.checked;

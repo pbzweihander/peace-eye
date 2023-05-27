@@ -1,6 +1,7 @@
 export function defaultSettings(): Settings {
   return {
     view: {
+      useMagneticHeading: true,
       showGround: true,
       showSlowAir: false,
     },
@@ -12,6 +13,7 @@ export interface Settings {
 }
 
 export interface ViewSettings {
+  useMagneticHeading: boolean;
   showGround: boolean;
   showSlowAir: boolean;
 }

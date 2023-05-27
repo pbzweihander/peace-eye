@@ -2,6 +2,7 @@ import { invoke } from "@tauri-apps/api";
 import { listen } from "@tauri-apps/api/event";
 import circle from "@turf/circle";
 import { type Feature, type FeatureCollection } from "geojson";
+import geomagnetism from "geomagnetism";
 import maplibregl from "maplibre-gl";
 import {
   useCallback,
@@ -58,6 +59,8 @@ export default function MainView(): ReactElement {
     [number, number] | undefined
   >(undefined);
 
+  const geomagnetismModel = useMemo(() => geomagnetism.model(), []);
+
   const onDisconnect = useCallback(async () => {
     setState(newTacviewState());
     await invoke("disconnect");
@@ -101,11 +104,21 @@ export default function MainView(): ReactElement {
       referenceLatitude + ownedBullseye.coords.latitude,
       referenceLongitude + ownedBullseye.coords.longitude,
     ];
-    const bearing = Math.round(getBearing(bullseyeCoords, cursorCoords));
+    let bearing = getBearing(bullseyeCoords, cursorCoords);
+    if (settings.view.useMagneticHeading) {
+      bearing =
+        bearing + (geomagnetismModel.point(cursorCoords).decl as number);
+    }
+    bearing = Math.round((bearing + 360) % 360);
     const range = Math.round(getRange(bullseyeCoords, cursorCoords));
 
     return [bearing, range];
-  }, [cursorCoords, state.blueBullseye, state.redBullseye]);
+  }, [
+    cursorCoords,
+    state.blueBullseye,
+    state.redBullseye,
+    settings.view.useMagneticHeading,
+  ]);
 
   // Populate GeoJson data for ruler
   const rulerGeoJson: FeatureCollection = useMemo(() => {
@@ -374,6 +387,8 @@ export default function MainView(): ReactElement {
                     }
                   : undefined
               }
+              geomagnetismModel={geomagnetismModel}
+              useMagneticHeading={settings.view.useMagneticHeading}
             />
           )}
         </div>
@@ -445,7 +460,12 @@ export default function MainView(): ReactElement {
           />
         </Source>
         {rulerStartCoords !== undefined && (
-          <BraaInfo start={rulerStartCoords} end={cursorCoords} />
+          <BraaInfo
+            start={rulerStartCoords}
+            end={cursorCoords}
+            geomagnetismModel={geomagnetismModel}
+            useMagneticHeading={settings.view.useMagneticHeading}
+          />
         )}
         {terrain.airports.map((airport, idx) => (
           <AirportMarker
