@@ -2,18 +2,28 @@ import * as mgrs from "mgrs";
 import { useCallback, type ReactElement } from "react";
 import { useMap } from "react-map-gl";
 
+import { type Terrain } from "./dcs/terrain";
 import { type ObjectSettings } from "./objectSettings";
 import { type TacviewObject } from "./tacview";
 import { tagToString } from "./tacview/record/objectProperty";
-import { formatDDM, formatDMS, getCardinal, meterToFeet } from "./util";
+import {
+  formatDDM,
+  formatDMS,
+  getBearing,
+  getCardinal,
+  getRange,
+  meterToFeet,
+} from "./util";
 
 export interface ObjectInfoProps {
   object: TacviewObject;
   referenceLatitude: number;
   referenceLongitude: number;
+  bullseyeCoords: [number, number] | undefined;
   onClose: () => void;
   objectSettings?: ObjectSettings;
   setObjectSettings?: (objectSettings: ObjectSettings) => void;
+  terrain: Terrain;
   geomagnetismModel: any;
   useMagneticHeading: boolean;
 }
@@ -33,9 +43,11 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
     object,
     referenceLatitude,
     referenceLongitude,
+    bullseyeCoords,
     onClose,
     objectSettings,
     setObjectSettings,
+    terrain,
     geomagnetismModel,
     useMagneticHeading,
   } = props;
@@ -56,6 +68,21 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
   }
   if (heading != null) {
     heading = Math.round((heading + 360) % 360);
+  }
+
+  let bullseyeInfo: string = "";
+  if (bullseyeCoords !== undefined && coords !== undefined) {
+    let bullseyeBearing = getBearing(bullseyeCoords, coords, terrain);
+    if (useMagneticHeading) {
+      bullseyeBearing =
+        bullseyeBearing -
+        (geomagnetismModel.point(bullseyeCoords).decl as number);
+    }
+    bullseyeBearing = Math.round((bullseyeBearing + 360) % 360);
+    const bullseyeRange = Math.round(getRange(bullseyeCoords, coords));
+    bullseyeInfo = `${bullseyeBearing.toString().padStart(3, "0")}${getCardinal(
+      bullseyeBearing
+    )} / ${bullseyeRange}`;
   }
 
   return (
@@ -191,6 +218,12 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
               {mgrs.forward([coords[1], coords[0]])}
             </span>
           </div>
+          {bullseyeInfo != null && (
+            <div className="flex flex-row w-full">
+              <span className="mr-2 flex-grow">Bullseye</span>
+              <span className="font-mono">{bullseyeInfo}</span>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -100,22 +100,22 @@ export default function MainView(): ReactElement {
 
   // TODO: Config coalition for bullseye
   const ownedBullseye = state.blueBullseye;
+  const bullseyeCoords: [number, number] | undefined =
+    referenceLatitude !== undefined &&
+    referenceLongitude !== undefined &&
+    ownedBullseye?.coords?.latitude !== undefined &&
+    ownedBullseye?.coords?.longitude !== undefined
+      ? [
+          referenceLatitude + ownedBullseye.coords.latitude,
+          referenceLongitude + ownedBullseye.coords.longitude,
+        ]
+      : undefined;
   // Calculate bullseye info of cursor
   const cursorBulls = useMemo<[number, number] | undefined>(() => {
-    if (
-      referenceLatitude === undefined ||
-      referenceLongitude === undefined ||
-      ownedBullseye?.coords?.latitude === undefined ||
-      ownedBullseye?.coords?.longitude === undefined ||
-      terrain === undefined
-    ) {
+    if (bullseyeCoords === undefined || terrain === undefined) {
       return undefined;
     }
 
-    const bullseyeCoords: [number, number] = [
-      referenceLatitude + ownedBullseye.coords.latitude,
-      referenceLongitude + ownedBullseye.coords.longitude,
-    ];
     let bearing = getBearing(bullseyeCoords, cursorCoords, terrain);
     if (settings.view.useMagneticHeading) {
       bearing =
@@ -373,6 +373,7 @@ export default function MainView(): ReactElement {
               object={selectedEntity}
               referenceLatitude={referenceLatitude}
               referenceLongitude={referenceLongitude}
+              bullseyeCoords={bullseyeCoords}
               onClose={() => {
                 setSelectedObjectId(undefined);
                 setSelectedAirportIndex(undefined);
@@ -394,6 +395,7 @@ export default function MainView(): ReactElement {
                     }
                   : undefined
               }
+              terrain={terrain}
               geomagnetismModel={geomagnetismModel}
               useMagneticHeading={settings.view.useMagneticHeading}
             />
