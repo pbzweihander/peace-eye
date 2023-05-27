@@ -1,3 +1,7 @@
+import proj4 from "proj4";
+
+import { type Terrain } from "./dcs/terrain";
+
 function toRadians(n: number): number {
   return n * (Math.PI / 180);
 }
@@ -15,29 +19,14 @@ export function nmToMeter(nm: number): number {
 }
 
 export function getBearing(
-  [startLat, startLong]: [number, number],
-  [endLat, endLong]: [number, number]
+  startCoords: [number, number],
+  endCoords: [number, number],
+  terrain: Terrain
 ): number {
-  const startLatRad = toRadians(startLat);
-  const startLongRad = toRadians(startLong);
-  const endLatRad = toRadians(endLat);
-  const endLongRad = toRadians(endLong);
+  const [startX, startY] = toMercProj(startCoords, terrain);
+  const [endX, endY] = toMercProj(endCoords, terrain);
 
-  let dLong = endLongRad - startLongRad;
-
-  const dPhi = Math.log(
-    Math.tan(endLatRad / 2.0 + Math.PI / 4.0) /
-      Math.tan(startLatRad / 2.0 + Math.PI / 4.0)
-  );
-  if (Math.abs(dLong) > Math.PI) {
-    if (dLong > 0.0) {
-      dLong = -(2.0 * Math.PI - dLong);
-    } else {
-      dLong = 2.0 * Math.PI + dLong;
-    }
-  }
-
-  return (toDegrees(Math.atan2(dLong, dPhi)) + 360.0) % 360.0;
+  return (toDegrees(Math.atan2(endX - startX, endY - startY)) + 360) % 360;
 }
 
 // In nautical miles
@@ -201,4 +190,27 @@ export function formatDDM([lat, lng]: [number, number]): string {
   const longitude = toDegreesDecimalMinutes(lng, 3);
   const longitudeCardinal = lng >= 0 ? "E" : "W";
   return `${latitudeCardinal}${latitude} ${longitudeCardinal}${longitude}`;
+}
+
+export function toMercProj(
+  [lat, lng]: [number, number],
+  terrain: Terrain
+): [number, number] {
+  const projection = terrain.projection;
+  // Reference: https://github.com/pydcs/dcs/blob/8fdeda106ba7e847a5d0a1ed358a1463636b513d/dcs/terrain/projections/transversemercator.py
+  const fromProjection = [
+    "+proj=tmerc",
+    "+lat_0=0",
+    `+lon_0=${projection.centralMeridian}`,
+    `+k_0=${projection.scaleFactor}`,
+    `+x_0=${projection.falseEasting}`,
+    `+y_0=${projection.falseNorthing}`,
+    "+towgs84=0,0,0,0,0,0,0",
+    "+units=m",
+    "+vunits=m",
+    "+ellps=WGS84",
+    "+no_defs",
+    "+axis=neu",
+  ].join(" ");
+  return proj4(fromProjection, [lng, lat]);
 }

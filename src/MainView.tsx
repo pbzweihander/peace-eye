@@ -93,6 +93,11 @@ export default function MainView(): ReactElement {
   const referenceLatitude = state.globalProperties.referenceLatitude;
   const referenceLongitude = state.globalProperties.referenceLongitude;
 
+  const terrain =
+    referenceLatitude !== undefined && referenceLongitude !== undefined
+      ? getTerrainFromReferencePoint(referenceLatitude, referenceLongitude)
+      : undefined;
+
   // TODO: Config coalition for bullseye
   const ownedBullseye = state.blueBullseye;
   // Calculate bullseye info of cursor
@@ -101,7 +106,8 @@ export default function MainView(): ReactElement {
       referenceLatitude === undefined ||
       referenceLongitude === undefined ||
       ownedBullseye?.coords?.latitude === undefined ||
-      ownedBullseye?.coords?.longitude === undefined
+      ownedBullseye?.coords?.longitude === undefined ||
+      terrain === undefined
     ) {
       return undefined;
     }
@@ -110,7 +116,7 @@ export default function MainView(): ReactElement {
       referenceLatitude + ownedBullseye.coords.latitude,
       referenceLongitude + ownedBullseye.coords.longitude,
     ];
-    let bearing = getBearing(bullseyeCoords, cursorCoords);
+    let bearing = getBearing(bullseyeCoords, cursorCoords, terrain);
     if (settings.view.useMagneticHeading) {
       bearing =
         bearing - (geomagnetismModel.point(bullseyeCoords).decl as number);
@@ -295,11 +301,6 @@ export default function MainView(): ReactElement {
     );
   }
 
-  const terrain = getTerrainFromReferencePoint(
-    referenceLatitude,
-    referenceLongitude
-  );
-
   if (terrain === undefined) {
     // Display error screen
     return (
@@ -469,6 +470,7 @@ export default function MainView(): ReactElement {
           <BraaInfo
             start={rulerStartCoords}
             end={cursorCoords}
+            terrain={terrain}
             geomagnetismModel={geomagnetismModel}
             useMagneticHeading={settings.view.useMagneticHeading}
           />
