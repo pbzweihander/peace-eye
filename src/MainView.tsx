@@ -459,7 +459,10 @@ export default function MainView(): ReactElement {
           />
         ))}
         {Object.entries(state.objects)
-          .filter(([_id, object]) => filterObject(object, settings))
+          .filter(
+            ([id, object]) =>
+              selectedObjectId === Number(id) || filterObject(object, settings)
+          )
           .map(([id, object]) => {
             return (
               <ObjectMarker
