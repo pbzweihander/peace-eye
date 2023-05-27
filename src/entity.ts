@@ -40,7 +40,11 @@ export function filterObject(
   if (types.includes("Weapon")) {
     return false;
   }
-  if (types.includes("Air") && object.estimatedSpeed < 25) {
+  if (
+    types.includes("Air") &&
+    !settings.view.showSlowAir &&
+    object.estimatedSpeed < 25
+  ) {
     return false;
   }
   return true;

@@ -2,6 +2,7 @@ export function defaultSettings(): Settings {
   return {
     view: {
       showGround: true,
+      showSlowAir: false,
     },
   };
 }
@@ -12,4 +13,5 @@ export interface Settings {
 
 export interface ViewSettings {
   showGround: boolean;
+  showSlowAir: boolean;
 }

@@ -152,8 +152,7 @@ export default function MainView(): ReactElement {
             object.type?.includes("Air") === true &&
             object.coords?.latitude !== undefined &&
             object.coords?.longitude !== undefined &&
-            object.coords?.heading !== undefined &&
-            object.estimatedSpeed >= 25
+            object.coords?.heading !== undefined
         )
         .map((object) => {
           const endCoords = moveCoords(

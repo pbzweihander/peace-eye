@@ -71,22 +71,40 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
           </div>
           <div className="px-2 pb-2 pt-4">
             {selectedTab === "view" && (
-              <div>
-                <label className="input-group">
-                  <span className="cursor-pointer bg-gray-300">
-                    Show ground objects
-                  </span>
-                  <input
-                    className="checkbox"
-                    type="checkbox"
-                    checked={settings.view.showGround}
-                    onChange={(e) => {
-                      settings.view.showGround = e.target.checked;
-                      setSettings(settings);
-                    }}
-                  />
-                </label>
-              </div>
+              <>
+                <div className="mb-2">
+                  <label className="input-group">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      checked={settings.view.showGround}
+                      onChange={(e) => {
+                        settings.view.showGround = e.target.checked;
+                        setSettings(settings);
+                      }}
+                    />
+                    <span className="cursor-pointer bg-gray-300">
+                      Show ground objects
+                    </span>
+                  </label>
+                </div>
+                <div>
+                  <label className="input-group">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      checked={settings.view.showSlowAir}
+                      onChange={(e) => {
+                        settings.view.showSlowAir = e.target.checked;
+                        setSettings(settings);
+                      }}
+                    />
+                    <span className="cursor-pointer bg-gray-300">
+                      Show air objects slower than 25 knots
+                    </span>
+                  </label>
+                </div>
+              </>
             )}
             {selectedTab === "connection" && (
               <div>
