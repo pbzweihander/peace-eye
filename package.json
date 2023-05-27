@@ -8,8 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "prettier": "prettier --write --config ./.prettierrc index.html './src/**/*.{js,jsx,ts,tsx,css}'",
-    "prettier:check": "prettier --check --config ./.prettierrc index.html './src/**/*.{js,jsx,ts,tsx,css}'",
+    "prettier": "prettier --write --config prettier.config.cjs index.html './src/**/*.{js,jsx,ts,tsx,css}'",
+    "prettier:check": "prettier --check --config prettier.config.cjs index.html './src/**/*.{js,jsx,ts,tsx,css}'",
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx}'"
   },

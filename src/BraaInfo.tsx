@@ -24,7 +24,7 @@ export default function BraaInfo(props: BraaInfoProps): ReactElement {
 
   return (
     <Marker latitude={props.end[0]} longitude={props.end[1]}>
-      <div className="text-xl bg-slate-400 p-0.5 translate-x-full">
+      <div className="translate-x-full bg-slate-400 p-0.5 text-xl">
         {bearing.toString().padStart(3, "0")}
         {cardinal} / {range}
       </div>

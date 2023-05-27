@@ -257,13 +257,13 @@ export default function MainView(): ReactElement {
   if (referenceLatitude === undefined || referenceLongitude === undefined) {
     // Display loading screen
     return (
-      <div className="h-full flex flex-col items-center justify-center">
+      <div className="flex h-full flex-col items-center justify-center">
         <div className="mb-3">
           <Spinner />
         </div>
         <div>
           <button
-            className="btn btn-sm btn-warning"
+            className="btn-warning btn-sm btn"
             onClick={async () => {
               await onDisconnect();
             }}
@@ -278,7 +278,7 @@ export default function MainView(): ReactElement {
   if (terrain === undefined) {
     // Display error screen
     return (
-      <div className="h-full flex flex-col items-center justify-center">
+      <div className="flex h-full flex-col items-center justify-center">
         Cannot find terrain from reference point ({referenceLatitude},{" "}
         {referenceLongitude}).
         <br />
@@ -341,7 +341,7 @@ export default function MainView(): ReactElement {
         }}
       >
         <AttributionControl position="bottom-left" />
-        <div className="m-2 absolute left-0 top-0">
+        <div className="absolute left-0 top-0 m-2">
           {selectedEntity !== undefined && (
             <ObjectInfo
               object={selectedEntity}
@@ -375,7 +375,7 @@ export default function MainView(): ReactElement {
             />
           )}
         </div>
-        <div className="m-2 absolute right-0 top-0">
+        <div className="absolute right-0 top-0 m-2">
           <ControlPanel
             objects={Object.entries(state.objects).map(([id, object]) => [
               Number(id),

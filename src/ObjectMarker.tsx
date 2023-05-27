@@ -43,7 +43,7 @@ export default function ObjectMarker(props: ObjectMarkerProps): ReactElement {
         anchor="center"
       >
         {selected ? (
-          <div className="p-2 rounded-full border-2 border-white">
+          <div className="rounded-full border-2 border-white p-2">
             {symbolElement}
           </div>
         ) : (
@@ -57,7 +57,7 @@ export default function ObjectMarker(props: ObjectMarkerProps): ReactElement {
           onClick={onClick}
           anchor="bottom"
         >
-          <div className="text-white mb-3">FARP</div>
+          <div className="mb-3 text-white">FARP</div>
         </Marker>
       )}
       {isAir && (
@@ -68,14 +68,14 @@ export default function ObjectMarker(props: ObjectMarkerProps): ReactElement {
           anchor="left"
         >
           <div
-            className="ml-5 text-white bg-slate-600/50 border px-0.5 rounded-sm w-fit"
+            className="ml-5 w-fit rounded-sm border bg-slate-600/50 px-0.5 text-white"
             style={{ borderColor: color }}
           >
             {makeObjectName(object)}
           </div>
           <div className="ml-5">
-            <span className="text-white mr-1">{altitude.toFixed(1)}</span>
-            <span className="text-orange-500 mr-1">
+            <span className="mr-1 text-white">{altitude.toFixed(1)}</span>
+            <span className="mr-1 text-orange-500">
               {Math.round(object.estimatedSpeed)}
             </span>
             <span className="text-cyan-500">

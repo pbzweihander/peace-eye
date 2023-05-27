@@ -28,7 +28,7 @@ export default function AirportMarker(props: AirportMarkerProps): ReactElement {
         }}
       >
         {selected ? (
-          <div className="p-2 rounded-full border-2 border-white">
+          <div className="rounded-full border-2 border-white p-2">
             {symbolElement}
           </div>
         ) : (
@@ -43,7 +43,7 @@ export default function AirportMarker(props: AirportMarkerProps): ReactElement {
           onClick();
         }}
       >
-        <div className="text-white mb-3">{airport.name}</div>
+        <div className="mb-3 text-white">{airport.name}</div>
       </Marker>
     </>
   );

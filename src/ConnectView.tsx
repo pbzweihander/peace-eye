@@ -16,20 +16,20 @@ export default function ConnectView(): ReactElement {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <form className="p-5 w-1/3 form-control" onSubmit={onSubmit}>
-        <label className="label label-text">Host</label>
+    <div className="flex h-full w-full items-center justify-center">
+      <form className="form-control w-1/3 p-5" onSubmit={onSubmit}>
+        <label className="label-text label">Host</label>
         <input
-          className="input input-bordered"
+          className="input-bordered input"
           type="text"
           value={host}
           onChange={(e) => {
             setHost(e.target.value);
           }}
         />
-        <label className="label label-text">Port</label>
+        <label className="label-text label">Port</label>
         <input
-          className="input input-bordered"
+          className="input-bordered input"
           type="number"
           value={port}
           max={65535}
@@ -38,18 +38,18 @@ export default function ConnectView(): ReactElement {
             setPort(Number(e.target.value));
           }}
         />
-        <label className="label label-text">Username</label>
+        <label className="label-text label">Username</label>
         <input
-          className="input input-bordered"
+          className="input-bordered input"
           type="text"
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
           }}
         />
-        <label className="label label-text">Password</label>
+        <label className="label-text label">Password</label>
         <input
-          className="input input-bordered"
+          className="input-bordered input"
           type="password"
           value={password}
           onChange={(e) => {

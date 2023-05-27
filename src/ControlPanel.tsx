@@ -19,11 +19,11 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
 
   return (
     <div className="bg-gray-200">
-      <div className="p-2 flex flex-row bg-gray-300 rounded-sm gap-2">
+      <div className="flex flex-row gap-2 rounded-sm bg-gray-300 p-2">
         <div>
           <button
             className={classNames(
-              "btn btn-xs",
+              "btn-xs btn",
               selectedTab !== "search" && "btn-outline"
             )}
             onClick={() => {
@@ -42,7 +42,7 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
         <div>
           <button
             className={classNames(
-              "btn btn-xs",
+              "btn-xs btn",
               selectedTab !== "watches" && "btn-outline"
             )}
             onClick={() => {
@@ -59,12 +59,12 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
           </button>
         </div>
         <div className="ml-auto">
-          <label className="btn btn-accent btn-xs" htmlFor="setting-modal">
+          <label className="btn-accent btn-xs btn" htmlFor="setting-modal">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="w-5 h-5"
+              className="h-5 w-5"
             >
               <path
                 fillRule="evenodd"
@@ -79,7 +79,7 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
         <>
           <div className="p-2">
             <input
-              className="input input-sm input-bordered w-full"
+              className="input-bordered input input-sm w-full"
               type="text"
               value={search}
               onChange={(e) => {

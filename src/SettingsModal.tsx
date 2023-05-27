@@ -18,16 +18,16 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
     <>
       <input type="checkbox" id="setting-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box bg-gray-200 border border-gray-500">
-          <div className="flex flex-row w-full mb-2 px-2">
+        <div className="modal-box border border-gray-500 bg-gray-200">
+          <div className="mb-2 flex w-full flex-row px-2">
             <span className="text-xl">Settings</span>
             <div className="ml-auto">
-              <label htmlFor="setting-modal" className="btn btn-sm">
+              <label htmlFor="setting-modal" className="btn-sm btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  className="w-5 h-5"
+                  className="h-5 w-5"
                 >
                   <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
                 </svg>
@@ -141,7 +141,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
             {selectedTab === "connection" && (
               <div>
                 <button
-                  className="btn btn-error"
+                  className="btn-error btn"
                   onClick={async () => {
                     await onDisconnect();
                   }}
@@ -159,7 +159,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
                 Contact: pbzweihander@gmail.com
                 <br />
                 <a
-                  className="link link-primary"
+                  className="link-primary link"
                   target="_blank"
                   rel="noreferrer"
                   href="https://github.com/pbzweihander/peace-eye"

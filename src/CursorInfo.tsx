@@ -43,23 +43,23 @@ export default function CursorInfo(props: CursorInfoProps): ReactElement {
 
   if (props.showCursorCoords) {
     return (
-      <div className="absolute right-0 bottom-0 text-yellow-600 text-2xl bg-gray-400 bg-opacity-20 p-1 flex flex-col w-[480px]">
-        <div className="flex flex-row w-full">
+      <div className="absolute right-0 bottom-0 flex w-[480px] flex-col bg-gray-400 bg-opacity-20 p-1 text-2xl text-yellow-600">
+        <div className="flex w-full flex-row">
           <span className="mr-2 flex-grow">DMS</span>
           <span className="font-mono">{formatDMS(props.cursorCoords)}</span>
         </div>
-        <div className="flex flex-row w-full">
+        <div className="flex w-full flex-row">
           <span className="mr-2 flex-grow">DDM</span>
           <span className="font-mono">{formatDDM(props.cursorCoords)}</span>
         </div>
-        <div className="flex flex-row w-full">
+        <div className="flex w-full flex-row">
           <span className="mr-2 flex-grow">MGRS</span>
           <span className="font-mono">
             {mgrs.forward([props.cursorCoords[1], props.cursorCoords[0]])}
           </span>
         </div>
         {bullseyeInfo != null && (
-          <div className="flex flex-row w-full">
+          <div className="flex w-full flex-row">
             <span className="mr-2 flex-grow">Bullseye</span>
             <span className="font-mono">{bullseyeInfo}</span>
           </div>
@@ -68,7 +68,7 @@ export default function CursorInfo(props: CursorInfoProps): ReactElement {
     );
   } else {
     return (
-      <div className="absolute right-0 bottom-0 text-yellow-600 text-3xl bg-gray-400 bg-opacity-20 p-1">
+      <div className="absolute right-0 bottom-0 bg-gray-400 bg-opacity-20 p-1 text-3xl text-yellow-600">
         {bullseyeInfo}
       </div>
     );

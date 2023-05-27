@@ -86,11 +86,11 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
   }
 
   return (
-    <div className="flex flex-col bg-gray-200 border border-gray-500 rounded-sm text-base">
-      <div className="p-2 bg-gray-400 text-sm flex flex-row gap-2">
+    <div className="flex flex-col rounded-sm border border-gray-500 bg-gray-200 text-base">
+      <div className="flex flex-row gap-2 bg-gray-400 p-2 text-sm">
         <b>{object.group}</b>
         <button
-          className="btn btn-xs btn-error ml-auto"
+          className="btn-error btn-xs btn ml-auto"
           onClick={() => {
             onClose();
           }}
@@ -98,7 +98,7 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
           Close
         </button>
       </div>
-      <div className="p-2 flex flex-row">
+      <div className="flex flex-row p-2">
         <div className="flex flex-col">
           <div>{object.name}</div>
           <div>{object.pilot}</div>
@@ -142,7 +142,7 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
             <div className="divider divider-horizontal" />
             <div className="flex-grow pr-4">
               <button
-                className="btn btn-block btn-sm btn-accent mb-2"
+                className="btn-accent btn-block btn-sm btn mb-2"
                 onClick={() => {
                   if (coords !== undefined) {
                     map.current?.flyTo({
@@ -154,10 +154,10 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
               >
                 Center
               </button>
-              <label className="input-group input-group-xs w-full mb-2">
+              <label className="input-group-xs input-group mb-2 w-full">
                 <span className="w-12 bg-warning">WR</span>
                 <input
-                  className="input input-xs input-bordered w-full"
+                  className="input-bordered input input-xs w-full"
                   type="number"
                   min="0"
                   value={objectSettings.warningRange}
@@ -169,10 +169,10 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
                   }}
                 />
               </label>
-              <label className="input-group input-group-xs w-full mb-2">
+              <label className="input-group-xs input-group mb-2 w-full">
                 <span className="w-12 bg-error">TR</span>
                 <input
-                  className="input input-xs input-bordered w-full"
+                  className="input-bordered input input-xs w-full"
                   type="number"
                   min="0"
                   value={objectSettings.threatRange}
@@ -184,8 +184,8 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
                   }}
                 />
               </label>
-              <label className="input-group input-group-xs w-fit">
-                <span className="bg-secondary cursor-pointer">Watch</span>
+              <label className="input-group-xs input-group w-fit">
+                <span className="cursor-pointer bg-secondary">Watch</span>
                 <input
                   className="checkbox"
                   type="checkbox"
@@ -203,23 +203,23 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
         )}
       </div>
       {coords !== undefined && (
-        <div className="p-2 flex flex-col">
-          <div className="flex flex-row w-full">
+        <div className="flex flex-col p-2">
+          <div className="flex w-full flex-row">
             <span className="mr-2 flex-grow">DMS</span>
             <span className="font-mono">{formatDMS(coords)}</span>
           </div>
-          <div className="flex flex-row w-full">
+          <div className="flex w-full flex-row">
             <span className="mr-2 flex-grow">DDM</span>
             <span className="font-mono">{formatDDM(coords)}</span>
           </div>
-          <div className="flex flex-row w-full">
+          <div className="flex w-full flex-row">
             <span className="mr-2 flex-grow">MGRS</span>
             <span className="font-mono">
               {mgrs.forward([coords[1], coords[0]])}
             </span>
           </div>
           {bullseyeInfo != null && (
-            <div className="flex flex-row w-full">
+            <div className="flex w-full flex-row">
               <span className="mr-2 flex-grow">Bullseye</span>
               <span className="font-mono">{bullseyeInfo}</span>
             </div>
