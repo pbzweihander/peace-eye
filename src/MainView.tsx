@@ -113,7 +113,7 @@ export default function MainView(): ReactElement {
     let bearing = getBearing(bullseyeCoords, cursorCoords);
     if (settings.view.useMagneticHeading) {
       bearing =
-        bearing + (geomagnetismModel.point(cursorCoords).decl as number);
+        bearing - (geomagnetismModel.point(bullseyeCoords).decl as number);
     }
     bearing = Math.round((bearing + 360) % 360);
     const range = Math.round(getRange(bullseyeCoords, cursorCoords));

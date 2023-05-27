@@ -52,7 +52,7 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
 
   let heading = object.coords?.heading;
   if (useMagneticHeading && heading != null && coords != null) {
-    heading = heading + (geomagnetismModel.point(coords).decl as number);
+    heading = heading - (geomagnetismModel.point(coords).decl as number);
   }
   if (heading != null) {
     heading = Math.round((heading + 360) % 360);
