@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api";
-import { type ReactElement, useState, type FormEvent } from "react";
+import { type ReactElement, useState, type FormEvent, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ConnectView(): ReactElement {
@@ -8,6 +8,15 @@ export default function ConnectView(): ReactElement {
   const [port, setPort] = useState(42674);
   const [username, setUsername] = useState("peace-eye");
   const [password, setPassword] = useState("");
+  const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
+
+  useMemo(async () => await invoke<boolean>("check_new_version"), [])
+    .then((b) => {
+      setIsNewVersionAvailable(b);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
   const onSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
@@ -16,7 +25,7 @@ export default function ConnectView(): ReactElement {
   };
 
   return (
-    <div className="flex h-full w-full items-center justify-center">
+    <div className="flex h-full w-full flex-col items-center justify-center">
       <form className="form-control w-1/3 p-5" onSubmit={onSubmit}>
         <label className="label-text label">Host</label>
         <input
@@ -58,6 +67,16 @@ export default function ConnectView(): ReactElement {
         />
         <input className="btn mt-5" type="submit" value="Connect" />
       </form>
+      {isNewVersionAvailable && (
+        <a
+          className="link-primary link text-xl"
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/pbzweihander/peace-eye/releases/latest"
+        >
+          New version available!
+        </a>
+      )}
     </div>
   );
 }

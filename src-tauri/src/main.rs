@@ -8,6 +8,8 @@ use std::{
     time::Duration,
 };
 
+use once_cell::sync::Lazy;
+use semver::Version;
 use serde::Serialize;
 use tacview_realtime_client::acmi::{
     record::{
@@ -361,6 +363,36 @@ async fn disconnect() {
     *state = None;
 }
 
+#[tauri::command]
+async fn check_new_version() -> bool {
+    static HTTP_CLIENT: Lazy<reqwest::Client> = Lazy::new(|| {
+        reqwest::Client::builder()
+            .redirect(reqwest::redirect::Policy::none())
+            .build()
+            .expect("failed to build HTTP client")
+    });
+    if let Ok(current) = Version::parse(env!("CARGO_PKG_VERSION")) {
+        if let Ok(latest_response) = HTTP_CLIENT
+            .get("https://github.com/pbzweihander/peace-eye/releases/latest")
+            .send()
+            .await
+        {
+            if (300u16..400).contains(&latest_response.status().as_u16()) {
+                if let Some(location) = latest_response.headers().get("location") {
+                    if let Ok(location) = location.to_str() {
+                        if let Some((_, version)) = location.rsplit_once('v') {
+                            if let Ok(new_version) = Version::parse(version) {
+                                return current < new_version;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    false
+}
+
 fn main() {
     tracing_subscriber::registry()
         .with(tracing_subscriber::EnvFilter::new(
@@ -370,7 +402,11 @@ fn main() {
         .init();
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![connect, disconnect])
+        .invoke_handler(tauri::generate_handler![
+            connect,
+            disconnect,
+            check_new_version,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
