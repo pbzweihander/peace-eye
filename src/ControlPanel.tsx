@@ -92,7 +92,9 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
               <ul className="menu">
                 {objects
                   .filter(([_id, object]) =>
-                    makeObjectName(object).toLowerCase().includes(search)
+                    makeObjectName(object)
+                      .toLowerCase()
+                      .includes(search.toLowerCase())
                   )
                   .map(([id, object]) => (
                     <li key={id}>
