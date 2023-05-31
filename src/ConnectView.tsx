@@ -32,7 +32,7 @@ export default function ConnectView(): ReactElement {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <h1 className="text-2xl font-mono">peace-eye v{currentVersion}</h1>
+      <h1 className="font-mono text-2xl">peace-eye v{currentVersion}</h1>
       <form className="form-control w-1/3 p-5" onSubmit={onSubmit}>
         <label className="label-text label">Host</label>
         <input
