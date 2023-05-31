@@ -10,13 +10,15 @@ export default function ConnectView(): ReactElement {
   const [password, setPassword] = useState("");
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
 
-  useMemo(async () => await invoke<boolean>("check_new_version"), [])
-    .then((b) => {
-      setIsNewVersionAvailable(b);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  useMemo(() => {
+    invoke<boolean>("check_new_version")
+      .then((b) => {
+        setIsNewVersionAvailable(b);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const onSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
