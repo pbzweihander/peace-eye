@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useState, type ReactElement } from "react";
 
+import { useCurrentVersion } from "./hook";
 import { type Settings } from "./settings";
 
 export interface SettingsModalProps {
@@ -11,6 +12,8 @@ export interface SettingsModalProps {
 
 export default function SettingsModal(props: SettingsModalProps): ReactElement {
   const [selectedTab, setSelectedTab] = useState("view");
+
+  const currentVersion = useCurrentVersion();
 
   const { settings, setSettings, onDisconnect } = props;
 
@@ -152,7 +155,9 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
             )}
             {selectedTab === "about" && (
               <div>
-                peace-eye
+                <span className="font-mono text-lg">
+                  peace-eye v{currentVersion}
+                </span>
                 <br />
                 Created by pbzweihander
                 <br />

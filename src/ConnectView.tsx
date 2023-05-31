@@ -2,6 +2,8 @@ import { invoke } from "@tauri-apps/api";
 import { type ReactElement, useState, type FormEvent, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useCurrentVersion } from "./hook";
+
 export default function ConnectView(): ReactElement {
   const navigate = useNavigate();
   const [host, setHost] = useState("");
@@ -9,6 +11,8 @@ export default function ConnectView(): ReactElement {
   const [username, setUsername] = useState("peace-eye");
   const [password, setPassword] = useState("");
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
+
+  const currentVersion = useCurrentVersion();
 
   useMemo(() => {
     invoke<boolean>("check_new_version")
@@ -28,6 +32,7 @@ export default function ConnectView(): ReactElement {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
+      <h1 className="text-2xl font-mono">peace-eye v{currentVersion}</h1>
       <form className="form-control w-1/3 p-5" onSubmit={onSubmit}>
         <label className="label-text label">Host</label>
         <input

@@ -364,6 +364,11 @@ async fn disconnect() {
 }
 
 #[tauri::command]
+fn get_current_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
+
+#[tauri::command]
 async fn check_new_version() -> bool {
     static HTTP_CLIENT: Lazy<reqwest::Client> = Lazy::new(|| {
         reqwest::Client::builder()
@@ -405,6 +410,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             connect,
             disconnect,
+            get_current_version,
             check_new_version,
         ])
         .run(tauri::generate_context!())
