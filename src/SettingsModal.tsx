@@ -123,6 +123,22 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
                     </span>
                   </label>
                 </div>
+                <div className="mb-2">
+                  <label className="input-group">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      checked={settings.view.showWeapon}
+                      onChange={(e) => {
+                        settings.view.showWeapon = e.target.checked;
+                        setSettings(settings);
+                      }}
+                    />
+                    <span className="cursor-pointer bg-gray-300">
+                      Show weapon objects
+                    </span>
+                  </label>
+                </div>
                 <div>
                   <label className="input-group">
                     <input

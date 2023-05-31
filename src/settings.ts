@@ -4,6 +4,7 @@ export function defaultSettings(): Settings {
       useMagneticHeading: true,
       showGround: true,
       showSlowAir: false,
+      showWeapon: false,
       showCursorCoords: false,
     },
   };
@@ -17,5 +18,6 @@ export interface ViewSettings {
   useMagneticHeading: boolean;
   showGround: boolean;
   showSlowAir: boolean;
+  showWeapon: boolean;
   showCursorCoords: boolean;
 }

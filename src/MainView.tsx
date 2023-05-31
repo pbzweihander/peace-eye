@@ -148,7 +148,8 @@ export default function MainView(): ReactElement {
         .filter(
           (object) =>
             filterObject(object, settings) &&
-            object.type?.includes("Air") === true &&
+            (object.type?.includes("Air") === true ||
+              object.type?.includes("Missile") === true) &&
             object.coords?.latitude !== undefined &&
             object.coords?.longitude !== undefined &&
             object.coords?.heading !== undefined

@@ -37,7 +37,7 @@ export function filterObject(
   if (types.includes("Projectile")) {
     return false;
   }
-  if (types.includes("Weapon")) {
+  if (!settings.view.showWeapon && types.includes("Weapon")) {
     return false;
   }
   if (
@@ -111,6 +111,8 @@ function getSidc(object: TacviewObject): string {
     }
   } else if (types.includes("Sea")) {
     set = "30";
+  } else if (types.includes("Missile")) {
+    set = "02";
   }
 
   let icon = "0000000000";
@@ -140,6 +142,9 @@ function getSidc(object: TacviewObject): string {
     }
     if (types.includes("AircraftCarrier")) {
       mainIcon = "120100";
+    }
+    if (types.includes("Missile")) {
+      mainIcon = "110000";
     }
     icon = `${mainIcon}${modifier}`;
   }

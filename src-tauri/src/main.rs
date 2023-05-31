@@ -198,7 +198,7 @@ impl TacviewState {
                                 if object
                                     .ty
                                     .as_ref()
-                                    .map(|ty| ty.contains(&Tag::Air))
+                                    .map(|ty| ty.contains(&Tag::Air) || ty.contains(&Tag::Missile))
                                     .unwrap_or(false)
                                     && object_coords.latitude.is_some()
                                     && object_coords.longitude.is_some()

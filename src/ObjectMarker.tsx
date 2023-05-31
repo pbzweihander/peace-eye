@@ -28,6 +28,7 @@ export default function ObjectMarker(props: ObjectMarkerProps): ReactElement {
   const symbolElement = <Symbol symbol={symbol} />;
 
   const isAir = object.type?.includes("Air") ?? false;
+  const isMissile = object.type?.includes("Missile") ?? false;
   const isFarp = object.name === "FARP";
 
   const altitude = ((object.coords?.altitude ?? 0) * 3.28084) / 1000;
@@ -81,6 +82,18 @@ export default function ObjectMarker(props: ObjectMarkerProps): ReactElement {
             <span className="text-cyan-500">
               {object.estimatedAltitudeRate.toFixed(1)}
             </span>
+          </div>
+        </Marker>
+      )}
+      {isMissile && (
+        <Marker
+          latitude={referenceLatitude + object.coords.latitude}
+          longitude={referenceLongitude + object.coords.longitude}
+          onClick={onClick}
+          anchor="left"
+        >
+          <div className="ml-5 w-fit rounded-sm bg-slate-600/50 px-0.5 text-xs text-white">
+            {makeObjectName(object)}
           </div>
         </Marker>
       )}
