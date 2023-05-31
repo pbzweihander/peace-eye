@@ -306,8 +306,8 @@ export default function MainView(): ReactElement {
       estimatedSpeed: 0,
       estimatedAltitudeRate: 0,
       coords: {
-        latitude: airport.position[0],
-        longitude: airport.position[1],
+        latitude: airport.position[0] - referenceLatitude,
+        longitude: airport.position[1] - referenceLongitude,
       },
       name: airport.name,
     };
