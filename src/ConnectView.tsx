@@ -34,7 +34,7 @@ export default function ConnectView(): ReactElement {
     <div className="flex h-full w-full flex-col items-center justify-center">
       <h1 className="font-mono text-2xl">peace-eye v{currentVersion}</h1>
       <form className="form-control w-1/3 p-5" onSubmit={onSubmit}>
-        <label className="label-text label">Host</label>
+        <label className="label label-text">Host</label>
         <input
           className="input-bordered input"
           type="text"
@@ -43,7 +43,7 @@ export default function ConnectView(): ReactElement {
             setHost(e.target.value);
           }}
         />
-        <label className="label-text label">Port</label>
+        <label className="label label-text">Port</label>
         <input
           className="input-bordered input"
           type="number"
@@ -54,7 +54,7 @@ export default function ConnectView(): ReactElement {
             setPort(Number(e.target.value));
           }}
         />
-        <label className="label-text label">Username</label>
+        <label className="label label-text">Username</label>
         <input
           className="input-bordered input"
           type="text"
@@ -63,7 +63,7 @@ export default function ConnectView(): ReactElement {
             setUsername(e.target.value);
           }}
         />
-        <label className="label-text label">Password</label>
+        <label className="label label-text">Password</label>
         <input
           className="input-bordered input"
           type="password"

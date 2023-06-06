@@ -40,7 +40,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
           <div className="tabs">
             <a
               className={classNames(
-                "tab tab-bordered",
+                "tab-bordered tab",
                 selectedTab === "view" && "tab-active"
               )}
               onClick={() => {
@@ -51,7 +51,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
             </a>
             <a
               className={classNames(
-                "tab tab-bordered",
+                "tab-bordered tab",
                 selectedTab === "connection" && "tab-active"
               )}
               onClick={() => {
@@ -62,7 +62,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
             </a>
             <a
               className={classNames(
-                "tab tab-bordered",
+                "tab-bordered tab",
                 selectedTab === "about" && "tab-active"
               )}
               onClick={() => {
