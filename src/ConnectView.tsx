@@ -72,7 +72,7 @@ export default function ConnectView(): ReactElement {
             setPassword(e.target.value);
           }}
         />
-        <input className="btn mt-5" type="submit" value="Connect" />
+        <input className="btn-neutral btn mt-5" type="submit" value="Connect" />
       </form>
       {isNewVersionAvailable && (
         <a
