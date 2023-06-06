@@ -62,7 +62,7 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
           <button
             className="btn-accent btn-xs btn"
             onClick={() => {
-              window.settingsModal.showModal();
+              (window as any).settingsModal.showModal();
             }}
           >
             <svg
