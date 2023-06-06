@@ -19,13 +19,15 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
 
   return (
     <>
-      <input type="checkbox" id="setting-modal" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box border border-gray-500 bg-gray-200">
+      <dialog id="settingsModal" className="modal">
+        <form
+          method="dialog"
+          className="modal-box border border-gray-500 bg-gray-200"
+        >
           <div className="mb-2 flex w-full flex-row px-2">
             <span className="text-xl">Settings</span>
             <div className="ml-auto">
-              <label htmlFor="setting-modal" className="btn-sm btn">
+              <button className="btn-sm btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -34,7 +36,7 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
                 >
                   <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
                 </svg>
-              </label>
+              </button>
             </div>
           </div>
           <div className="tabs">
@@ -174,8 +176,11 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
               </div>
             )}
           </div>
-        </div>
-      </div>
+        </form>
+        <form method="dialog" className="modal-backdrop">
+          <button>Close</button>
+        </form>
+      </dialog>
     </>
   );
 }

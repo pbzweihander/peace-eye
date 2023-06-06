@@ -59,7 +59,12 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
           </button>
         </div>
         <div className="ml-auto">
-          <label className="btn-accent btn-xs btn" htmlFor="setting-modal">
+          <button
+            className="btn-accent btn-xs btn"
+            onClick={() => {
+              window.settingsModal.showModal();
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -72,7 +77,7 @@ export default function ControlPanel(props: ControlPanelProps): ReactElement {
                 clipRule="evenodd"
               />
             </svg>
-          </label>
+          </button>
         </div>
       </div>
       {selectedTab === "search" && (
