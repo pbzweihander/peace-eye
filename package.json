@@ -17,7 +17,7 @@
     "@tauri-apps/api": "^1.2.0",
     "@turf/circle": "^6.5.0",
     "classnames": "^2.3.2",
-    "daisyui": "^2.50.0",
+    "daisyui": "^3.0.3",
     "geojson": "^0.5.0",
     "geomagnetism": "^0.1.1",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
