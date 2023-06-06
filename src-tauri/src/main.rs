@@ -178,9 +178,13 @@ impl TacviewState {
                             self.global_properties.comments = Some(comments);
                         }
                         GlobalProperty::ReferenceLongitude(longitude) => {
+                            // When ReferenceLongitude occured, assume new connection was made.
+                            self.objects.clear();
                             self.global_properties.reference_longitude = Some(longitude);
                         }
                         GlobalProperty::ReferenceLatitude(latitude) => {
+                            // When ReferenceLatitude occured, assume new connection was made.
+                            self.objects.clear();
                             self.global_properties.reference_latitude = Some(latitude);
                         }
                         _ => {}
