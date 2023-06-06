@@ -74,88 +74,70 @@ export default function SettingsModal(props: SettingsModalProps): ReactElement {
           </div>
           <div className="px-2 pb-2 pt-4">
             {selectedTab === "view" && (
-              <>
-                <div className="mb-2">
-                  <label className="input-group">
-                    <input
-                      className="checkbox"
-                      type="checkbox"
-                      checked={settings.view.useMagneticHeading}
-                      onChange={(e) => {
-                        settings.view.useMagneticHeading = e.target.checked;
-                        setSettings(settings);
-                      }}
-                    />
-                    <span className="cursor-pointer bg-gray-300">
-                      Use magnetic heading
-                    </span>
-                  </label>
-                </div>
-                <div className="mb-2">
-                  <label className="input-group">
-                    <input
-                      className="checkbox"
-                      type="checkbox"
-                      checked={settings.view.showGround}
-                      onChange={(e) => {
-                        settings.view.showGround = e.target.checked;
-                        setSettings(settings);
-                      }}
-                    />
-                    <span className="cursor-pointer bg-gray-300">
-                      Show ground objects
-                    </span>
-                  </label>
-                </div>
-                <div className="mb-2">
-                  <label className="input-group">
-                    <input
-                      className="checkbox"
-                      type="checkbox"
-                      checked={settings.view.showSlowAir}
-                      onChange={(e) => {
-                        settings.view.showSlowAir = e.target.checked;
-                        setSettings(settings);
-                      }}
-                    />
-                    <span className="cursor-pointer bg-gray-300">
-                      Show air objects slower than 25 knots
-                    </span>
-                  </label>
-                </div>
-                <div className="mb-2">
-                  <label className="input-group">
-                    <input
-                      className="checkbox"
-                      type="checkbox"
-                      checked={settings.view.showWeapon}
-                      onChange={(e) => {
-                        settings.view.showWeapon = e.target.checked;
-                        setSettings(settings);
-                      }}
-                    />
-                    <span className="cursor-pointer bg-gray-300">
-                      Show weapon objects
-                    </span>
-                  </label>
-                </div>
-                <div>
-                  <label className="input-group">
-                    <input
-                      className="checkbox"
-                      type="checkbox"
-                      checked={settings.view.showCursorCoords}
-                      onChange={(e) => {
-                        settings.view.showCursorCoords = e.target.checked;
-                        setSettings(settings);
-                      }}
-                    />
-                    <span className="cursor-pointer bg-gray-300">
-                      Show cursor coordinates
-                    </span>
-                  </label>
-                </div>
-              </>
+              <div className="form-control">
+                <label className="label cursor-pointer">
+                  <span className="label-text">Use magnetic heading</span>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    checked={settings.view.useMagneticHeading}
+                    onChange={(e) => {
+                      settings.view.useMagneticHeading = e.target.checked;
+                      setSettings(settings);
+                    }}
+                  />
+                </label>
+                <label className="label cursor-pointer">
+                  <span className="label-text">Show ground objects</span>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    checked={settings.view.showGround}
+                    onChange={(e) => {
+                      settings.view.showGround = e.target.checked;
+                      setSettings(settings);
+                    }}
+                  />
+                </label>
+                <label className="label cursor-pointer">
+                  <span className="label-text">
+                    Show air objects slower than 25 knots
+                  </span>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    checked={settings.view.showSlowAir}
+                    onChange={(e) => {
+                      settings.view.showSlowAir = e.target.checked;
+                      setSettings(settings);
+                    }}
+                  />
+                </label>
+                <label className="label cursor-pointer">
+                  <span className="label-text">Show weapon objects</span>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    checked={settings.view.showWeapon}
+                    onChange={(e) => {
+                      settings.view.showWeapon = e.target.checked;
+                      setSettings(settings);
+                    }}
+                  />
+                </label>
+                <label className="label cursor-pointer">
+                  <span className="label-text">Show cursor coordinates</span>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    checked={settings.view.showCursorCoords}
+                    onChange={(e) => {
+                      settings.view.showCursorCoords = e.target.checked;
+                      setSettings(settings);
+                    }}
+                  />
+                </label>
+              </div>
             )}
             {selectedTab === "connection" && (
               <div>

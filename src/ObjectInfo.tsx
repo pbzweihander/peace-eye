@@ -140,7 +140,7 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
         {objectSettings !== undefined && (
           <>
             <div className="divider divider-horizontal" />
-            <div className="flex-grow pr-4">
+            <div className="form-control flex-grow pr-4">
               <button
                 className="btn-accent btn-block btn-sm btn mb-2"
                 onClick={() => {
@@ -154,10 +154,12 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
               >
                 Center
               </button>
-              <label className="input-group-xs input-group mb-2 w-full">
-                <span className="w-12 bg-warning">WR</span>
+              <div className="join mb-2 w-full">
+                <div className="join-item flex w-12 items-center justify-center bg-warning px-2 text-xs">
+                  <span>WR</span>
+                </div>
                 <input
-                  className="input-bordered input input-xs w-full"
+                  className="input-bordered input input-xs join-item w-full"
                   type="number"
                   min="0"
                   value={objectSettings.warningRange}
@@ -168,9 +170,11 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
                     }
                   }}
                 />
-              </label>
-              <label className="input-group-xs input-group mb-2 w-full">
-                <span className="w-12 bg-error">TR</span>
+              </div>
+              <div className="join w-full">
+                <div className="join-item flex w-12 items-center justify-center bg-error px-2 text-xs">
+                  <span>TR</span>
+                </div>
                 <input
                   className="input-bordered input input-xs w-full"
                   type="number"
@@ -183,11 +187,11 @@ export default function ObjectInfo(props: ObjectInfoProps): ReactElement {
                     }
                   }}
                 />
-              </label>
-              <label className="input-group-xs input-group w-fit">
-                <span className="cursor-pointer bg-secondary">Watch</span>
+              </div>
+              <label className="label cursor-pointer">
+                <span className="label-text">Watch</span>
                 <input
-                  className="checkbox"
+                  className="checkbox-accent checkbox"
                   type="checkbox"
                   checked={objectSettings.watch}
                   onChange={(e) => {
