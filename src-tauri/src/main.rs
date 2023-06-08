@@ -82,7 +82,6 @@ struct TacviewObject {
     ty: Option<HashSet<Tag>>,
     callsign: Option<String>,
     pilot: Option<String>,
-    squawk: Option<String>,
     group: Option<String>,
     coalition: Option<String>,
 }
@@ -237,9 +236,6 @@ impl TacviewState {
                         }
                         ObjectProperty::Pilot(value) => {
                             object.pilot = Some(value);
-                        }
-                        ObjectProperty::Squawk(value) => {
-                            object.squawk = Some(value);
                         }
                         ObjectProperty::Group(value) => {
                             object.group = Some(value);
