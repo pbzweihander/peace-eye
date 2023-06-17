@@ -56,7 +56,16 @@ export default function MainView(): ReactElement {
 
   const geomagnetismModel = useMemo(() => {
     if (state.globalProperties.referenceTime != null) {
-      return geomagnetism.model(new Date(state.globalProperties.referenceTime));
+      let model;
+      try {
+        model = geomagnetism.model(
+          new Date(state.globalProperties.referenceTime)
+        );
+      } catch (e) {
+        console.log(e);
+        model = geomagnetism.model();
+      }
+      return model;
     } else {
       return geomagnetism.model();
     }
