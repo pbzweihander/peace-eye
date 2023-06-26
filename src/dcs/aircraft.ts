@@ -30,6 +30,7 @@ export const AircraftToSidcIcon: Record<string, string> = {
   "Mirage 2000-5": "1101040000",
   "F-15C": "1101040000",
   "F-15E": "1101040000",
+  "F-15ESE": "1101040000",
   "MiG-29A": "1101040000",
   "MiG-29G": "1101040000",
   "MiG-29S": "1101040000",
