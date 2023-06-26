@@ -11,7 +11,7 @@ import MainView from "./MainView";
 export default function App(): ReactElement {
   useEffect(() => {
     const unlisten = listen<string>("error", (event) => {
-      toast.error(event.payload, { autoClose: false });
+      toast.error(event.payload);
     });
 
     return () => {
