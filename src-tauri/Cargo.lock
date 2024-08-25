@@ -2762,7 +2762,7 @@ dependencies = [
 [[package]]
 name = "tacview-realtime-client"
 version = "0.1.0"
-source = "git+https://github.com/pbzweihander/tacview-realtime-client-rs.git?rev=59e0d8421875dadb2e6720d29c9175127f01ef66#59e0d8421875dadb2e6720d29c9175127f01ef66"
+source = "git+https://github.com/pbzweihander/tacview-realtime-client-rs.git?rev=bea471ffbc9315f1965d500809ad004765017183#bea471ffbc9315f1965d500809ad004765017183"
 dependencies = [
  "crc",
  "itertools",
